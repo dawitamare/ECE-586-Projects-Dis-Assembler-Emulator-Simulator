@@ -31,17 +31,17 @@ int main(int argc, char** argv)
 	int PC		= 0;		// Program Counter
 	int Results;				
 	
-	// Is file valid to open
 	if (argc != 2)
-	{
+	{// Is file valid to open i.e. is path and name correct?
 		printf("\nPlease include 1 argument that is the file path to the FISA memory image. \n\n");
 		exit(1);
 	}
 
 	// Open File from main pass-by reference value
 	FILE* Fp = fopen(argv[1], "rb");
+	
 	if (Fp == NULL)
-	{
+	{// Check if file opened is empty or contains data
 		printf("\n**Error: File could not be opened.\n\n");
 		exit(1);
 	}
@@ -204,8 +204,8 @@ int main(int argc, char** argv)
 						exit(1);
 						break;
 		}
+		// Set R0 to Equal 0
 		Reg[0] = 0;
 	}
-
 	return 0;
 }

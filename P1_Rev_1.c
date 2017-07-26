@@ -1,6 +1,7 @@
 /*
-*	Author: Zachary Clark-Williams
-*	Dat Last Revised: 07/18/2017
+*	File: 	P1_Rev_1.c
+*	Author:	Zachary Clark-Williams
+*	Date Last Revised: 07/26/2017
 *
 *	ECE 586 Computer Architecture
 *	Project 1 - Disassembler

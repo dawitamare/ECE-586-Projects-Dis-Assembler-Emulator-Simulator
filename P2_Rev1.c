@@ -1,12 +1,13 @@
 /*
-*	Author: Zachary Clark-Williams
+*	File:	P2_Rev1.c
+*	Author:	Zachary Clark-Williams
 *	Dat Last Revised: 07/25/2017
 *
 *	ECE 586 Computer Architecture
 *	Project 2 - Emulator
 *
 *	Description - 
-*		This Emulation code will build on project 1's disassembler
+*		This Emulation code will build on P1_Rev_1.c dis-assembler
 *	to run the input bit image file. Using registers R0 to R7 with a 
 *	capacity of 8 bits. R0 is dedicated to always containing 0. 
 *
@@ -136,26 +137,67 @@ int main(int argc, char** argv)
 						Reg[Oprnd1] = Reg[Oprnd2] % Oprnd3;
 						break;
 			case 128:	// Jump
+						PC = Oprnd1;
 						break;
 			case 130:	// Branch Equal To
+						if(Reg[Oprnd2] == Reg[Oprnd3])
+						{
+							PC = Oprnd1;
+						}
 						break;
 			case 131:	// Branch Equal To Immediate
+						if(Reg[Oprnd2] == Oprnd2)
+						{
+							PC = Oprnd1;
+						}
 						break;
 			case 132:	// Branch Less Than
+						if(Reg[Oprnd2] < Reg[Oprnd3])
+						{
+							PC = Oprnd1;
+						}
 						break;
 			case 133:	// Branch Less Than Immediate
+						if(Reg[Oprnd2] < Oprnd3)
+						{
+							PC = Oprnd1;
+						}
 						break;
 			case 134:	// Branch Less Than or Equal To
+						if(Reg[Oprnd2] <= Reg[Oprnd3])
+						{
+							PC = Oprnd1;
+						}
 						break;
 			case 135:	// Branch Less Than or Equal To Immediate
+						if(Reg[Oprnd2] <= Oprnd3)
+						{
+							PC = Oprnd1;
+						}
 						break;
 			case 136:	// Branch Greater Than
+						if(Reg[Oprnd2] > Reg[Oprnd3])
+						{
+							PC = Oprnd1;
+						}
 						break;
 			case 137:	// Branch Greater Than Immediate
+						if(Reg[Oprnd2] > Oprnd3)
+						{
+							PC = Oprnd1;
+						}
 						break;
 			case 138:	// Branch Greater Than or Equal To
+						if(Reg[Oprnd2] >= Reg[Oprnd3])
+						{
+							PC = Oprnd1;
+						}
 						break;
 			case 139:	// Branch Greater Than or Equal To Immediate
+						if(Reg[Oprnd2] >= Oprnd3)
+						{
+							PC = Oprnd1;
+						}
 						break;
 			default:	printf("\nError: Unrecognizable Operation Code.\n\n");			// If Nothing Matches Must Be Reserved
 						exit(1);

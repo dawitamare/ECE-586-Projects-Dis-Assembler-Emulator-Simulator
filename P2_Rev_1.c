@@ -29,7 +29,7 @@ int main(int argc, char** argv)
 	int Oprnd3 	= 0;		// Operand 3 Integer
 	int Quit_Flag	= 0;		// Quit Flag when finished program
 	int PC		= 0;		// Program Counter
-	int Results;			
+	int Results	= 0;			
 	
 	if (argc != 2)
 	{// Is file valid to open i.e. is path and name correct?

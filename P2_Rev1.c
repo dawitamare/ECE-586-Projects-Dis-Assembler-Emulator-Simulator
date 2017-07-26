@@ -22,13 +22,13 @@ int main(int argc, char** argv)
 {
 	// Variable Declarations
 	uint32_t mem_space[256];	// 32-bit memory array of 256 length
-	uint8_t	 Reg[8];			// 8 Register File
+	uint8_t	 Reg[8];		// 8 Register File
 	int Op_Code 	= 0;		// Operation Integer 
-	int Oprnd1 		= 0;		// Operand 1 Integer
-	int Oprnd2 		= 0;		// Operand 2 Integer
-	int Oprnd3 		= 0;		// Operand 3 Integer
+	int Oprnd1 	= 0;		// Operand 1 Integer
+	int Oprnd2 	= 0;		// Operand 2 Integer
+	int Oprnd3 	= 0;		// Operand 3 Integer
 	int Quit_Flag	= 0;		// Quit Flag when finished program
-	int PC			= 0;		// Program Counter
+	int PC		= 0;		// Program Counter
 	int Results;				
 	
 	// Is file valid to open

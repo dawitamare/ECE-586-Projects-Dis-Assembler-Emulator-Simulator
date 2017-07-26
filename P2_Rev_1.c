@@ -76,130 +76,131 @@ int main(int argc, char** argv)
 			case 0:		// Quit	
 						Quit_Flag = 1;
 						break;
-			case 2:		// Print
+			case 2:		// Print Register Contents As Number
 						fprint("%d",Reg[Oprnd1]);
 						break;
-			case 3:		// Print Immediate
+			case 3:		// Print As Number Using Immediate
 						fprint("%d",Oprnd1);
 						break;
-			case 4:		// Print Character
+			case 4:		// Print Register Contents As ASCII Character 
 						fprint("%c",Reg[Oprnd1]);
 						break;
-			case 5:		// Print Character Immediate
+			case 5:		// Print As ASCII Character Using Immediate
 						fprint("%c",Oprnd1);
 						break;
-			case 32:	// Load
+			case 32:	// Load To Register From Register Contents Pointing to Memory Addr
 						Reg[Oprnd1] = mem_space[Reg[Oprnd2]];
 						break;
-			case 33:	// Load Immediate
+			case 33:	// Load To Register From Immediate Value Pointing to Memory Addr
 						Reg[Oprnd1] = mem_space[Oprnd2];
 						break;
-			case 34:	// Store
+			case 34:	// Store Register Contents To Memory Addr Pointed To By Register Contents
 						mem_space[Reg[Oprnd1]] = Reg[Oprnd2];
 						break;
-			case 35:	// Store Immediate
+			case 35:	// Store Immediate Value To Memory Addr Pointed To By Register Contents
 						mem_space[Reg[Oprnd1]] = Oprnd2;
 						break;
-			case 36:	// Store Immediate Address
+			case 36:	// Store Register Contents To Memory Addr Pointed To By Immediate Address
 						mem_space[Oprnd1] = Reg[Oprnd2];
 						break;
-			case 37:	// Store Immediate Address Immediate
+			case 37:	// Store Mem Contents Pointed To By Immediate Value Addr To Mem Addr Pointed To By Immediate Value Addr
 						mem_space[Oprnd1] = mem_space[Oprnd2];
 						break;
-			case 64:	// Add
+			case 64:	// Add Reg Contents of Second Two Reg's, Store in First Reg
 						Reg[Oprnd1] = Reg[Oprnd2] + Reg[Oprnd3];
 						break;
-			case 65:	// Add Immediate
+			case 65:	// Add Immediate To Second Reg Contents, Store In First Reg
 						Reg[Oprnd1] = Reg[Oprnd2] + Oprnd3;
 						break;
-			case 66:	// Subtract
+			case 66:	// Subtract Reg Contents of Second Two Reg's, Store in First Reg
 						Reg[Oprnd1] = Reg[Oprnd2] - Reg[Oprnd3];
 						break;
-			case 67:	// Subtract Immediate
+			case 67:	// Subtract Immediate Value From Second Reg Contents, Store In First Reg
 						Reg[Oprnd1] = Reg[Oprnd2] - Oprnd3;
 						break;
-			case 68:	// Multiply
+			case 68:	// Multiply Reg Contents of Second Two Reg's, Store in First Reg
 						Reg[Oprnd1] = Reg[Oprnd2] * Reg[Oprnd3];
 						break;
-			case 69:	// Multiply Immediate
+			case 69:	// Multiply Immediate And Second Reg Contents, Store In First Reg
 						Reg[Oprnd1] = Reg[Oprnd2] * Oprnd3;
 						break;
-			case 72:	// Divide
+			case 72:	// Divide Second Reg Contents By Third Reg Contents, Store In First Reg
 						Reg[Oprnd1] = Reg[Oprnd2] / Reg[Oprnd3];
 						break;
-			case 73:	// Divide Immediate
+			case 73:	// Divide Second Reg Contents By Immediate Value, Store In First Reg
 						Reg[Oprnd1] = Reg[Oprnd2] / Oprnd3;
 						break;
-			case 80:	// Modulus
+			case 80:	// Modulo Second Reg Contents By Third Reg Contents, Store In First Reg
 						Reg[Oprnd1] = Reg[Oprnd2] % Reg[Oprnd3];
 						break;
-			case 81:	// Modulus Immediate
+			case 81:	// Modulus Second Reg Contents By Immediate Value, Store In First Reg
 						Reg[Oprnd1] = Reg[Oprnd2] % Oprnd3;
 						break;
-			case 128:	// Jump
+			case 128:	// Jump To Specified By Immediate Addr
 						PC = Oprnd1;
 						break;
-			case 130:	// Branch Equal To
+			case 130:	// Branch To Immediate Addr If Second Reg Contents is Equal to Contents of Third Reg
 						if(Reg[Oprnd2] == Reg[Oprnd3])
 						{
 							PC = Oprnd1;
 						}
 						break;
-			case 131:	// Branch Equal To Immediate
+			case 131:	// Branch To Immediate Addr If Second Reg Contents is Equal to Immediate Value
 						if(Reg[Oprnd2] == Oprnd2)
 						{
 							PC = Oprnd1;
 						}
 						break;
-			case 132:	// Branch Less Than
+			case 132:	// Branch To Immediate Addr If Second Reg Contents is Less Than Contents of Third Reg 
 						if(Reg[Oprnd2] < Reg[Oprnd3])
 						{
 							PC = Oprnd1;
 						}
 						break;
-			case 133:	// Branch Less Than Immediate
+			case 133:	// Branch To Immediate Addr If Second Reg Contents is Less Than Immediate Value
 						if(Reg[Oprnd2] < Oprnd3)
 						{
 							PC = Oprnd1;
 						}
 						break;
-			case 134:	// Branch Less Than or Equal To
+			case 134:	// Branch To Immediate Addr If Second Reg Contents is Less Than Or Equal to Contents of Third Reg
 						if(Reg[Oprnd2] <= Reg[Oprnd3])
 						{
 							PC = Oprnd1;
 						}
 						break;
-			case 135:	// Branch Less Than or Equal To Immediate
+			case 135:	// Branch To Immediate Addr If Second Reg Contents is Less Than Or Equal To Immediate Value
 						if(Reg[Oprnd2] <= Oprnd3)
 						{
 							PC = Oprnd1;
 						}
 						break;
-			case 136:	// Branch Greater Than
+			case 136:	// Branch To Immediate Addr If Second Reg Contents is Greater Than Contents of Third Reg
 						if(Reg[Oprnd2] > Reg[Oprnd3])
 						{
 							PC = Oprnd1;
 						}
 						break;
-			case 137:	// Branch Greater Than Immediate
+			case 137:	// Branch To Immediate Addr If Second Reg Contents is Greater Than Immediate Value
 						if(Reg[Oprnd2] > Oprnd3)
 						{
 							PC = Oprnd1;
 						}
 						break;
-			case 138:	// Branch Greater Than or Equal To
+			case 138:	// Branch To Immediate Addr If Second Reg Contents is Greater Than Or Equal to Contents of Third Reg
 						if(Reg[Oprnd2] >= Reg[Oprnd3])
 						{
 							PC = Oprnd1;
 						}
 						break;
-			case 139:	// Branch Greater Than or Equal To Immediate
+			case 139:	// Branch To Immediate Addr If Second Reg Contents is Greater Than Or Equal To Immediate Value
 						if(Reg[Oprnd2] >= Oprnd3)
 						{
 							PC = Oprnd1;
 						}
 						break;
-			default:	printf("\nError: Unrecognizable Operation Code.\n\n");			// If Nothing Matches Must Be Reserved
+			default:	// If Nothing Matches We Have An **ERROR!!!
+						printf("\n**Error: Unrecognizable Operation Code.\n\n");
 						exit(1);
 						break;
 		}

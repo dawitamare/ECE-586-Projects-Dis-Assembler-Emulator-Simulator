@@ -29,7 +29,7 @@ int main(int argc, char** argv)
 	int Oprnd3 	= 0;		// Operand 3 Integer
 	int Quit_Flag	= 0;		// Quit Flag when finished program
 	int PC		= 0;		// Program Counter
-	int Results;				
+	int Results;			
 	
 	if (argc != 2)
 	{// Is file valid to open i.e. is path and name correct?
@@ -65,7 +65,7 @@ int main(int argc, char** argv)
 	while(Quit_Flag == 0)
 	{// Parse array cells 4-bytes
 
-		Op_Code	= ((mem_space[PC]) 	     & 255);	// Parse out First  byte: Operation 
+		Op_Code	= ((mem_space[PC]) 	 & 255);	// Parse out First  byte: Operation 
 		Oprnd1	= ((mem_space[PC] >> 8)  & 255);	// Parse out Second byte: Operand 1
 		Oprnd2	= ((mem_space[PC] >> 16) & 255);	// Parse out Third  byte: Operand 2
 		Oprnd3	= ((mem_space[PC] >> 24) & 255);	// Parse out Fourth byte: Operand 3

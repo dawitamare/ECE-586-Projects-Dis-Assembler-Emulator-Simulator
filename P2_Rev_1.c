@@ -157,61 +157,61 @@ int main(int argc, char** argv)
 			case 128:	// Jump To Specified By Immediate Addr
 						PC = Oprnd1;
 						break;
-			case 130:	// Branch To Immediate Addr If Second Reg Contents is Equal to Contents of Third Reg
+			case 130:	// Branch To Oprnd1 Addr If Second Reg Contents is Equal to Contents of Third Reg
 						if(Reg[Oprnd2] == Reg[Oprnd3])
 						{
 							PC = Oprnd1;
 						}
 						break;
-			case 131:	// Branch To Immediate Addr If Second Reg Contents is Equal to Immediate Value
-						if(Reg[Oprnd2] == Oprnd2)
+			case 131:	// Branch To Oprnd 1 Addr If Second Reg Contents is Equal to Immediate Value
+						if(Reg[Oprnd2] == Oprnd3)
 						{
 							PC = Oprnd1;
 						}
 						break;
-			case 132:	// Branch To Immediate Addr If Second Reg Contents is Less Than Contents of Third Reg 
+			case 132:	// Branch To Oprnd 1 Addr If Second Reg Contents is Less Than Contents of Third Reg 
 						if(Reg[Oprnd2] < Reg[Oprnd3])
 						{
 							PC = Oprnd1;
 						}
 						break;
-			case 133:	// Branch To Immediate Addr If Second Reg Contents is Less Than Immediate Value
+			case 133:	// Branch To Oprnd1 Addr If Second Reg Contents is Less Than Immediate Value
 						if(Reg[Oprnd2] < Oprnd3)
 						{
 							PC = Oprnd1;
 						}
 						break;
-			case 134:	// Branch To Immediate Addr If Second Reg Contents is Less Than Or Equal to Contents of Third Reg
+			case 134:	// Branch To Oprnd 1 Addr If Second Reg Contents is Less Than Or Equal to Contents of Third Reg
 						if(Reg[Oprnd2] <= Reg[Oprnd3])
 						{
 							PC = Oprnd1;
 						}
 						break;
-			case 135:	// Branch To Immediate Addr If Second Reg Contents is Less Than Or Equal To Immediate Value
+			case 135:	// Branch To Oprnd1 Addr If Second Reg Contents is Less Than Or Equal To Immediate Value
 						if(Reg[Oprnd2] <= Oprnd3)
 						{
 							PC = Oprnd1;
 						}
 						break;
-			case 136:	// Branch To Immediate Addr If Second Reg Contents is Greater Than Contents of Third Reg
+			case 136:	// Branch To Oprnd1 Addr If Second Reg Contents is Greater Than Contents of Third Reg
 						if(Reg[Oprnd2] > Reg[Oprnd3])
 						{
 							PC = Oprnd1;
 						}
 						break;
-			case 137:	// Branch To Immediate Addr If Second Reg Contents is Greater Than Immediate Value
+			case 137:	// Branch To Oprnd1 Addr If Second Reg Contents is Greater Than Immediate Value
 						if(Reg[Oprnd2] > Oprnd3)
 						{
 							PC = Oprnd1;
 						}
 						break;
-			case 138:	// Branch To Immediate Addr If Second Reg Contents is Greater Than Or Equal to Contents of Third Reg
+			case 138:	// Branch To Oprnd1 Addr If Second Reg Contents is Greater Than Or Equal to Contents of Third Reg
 						if(Reg[Oprnd2] >= Reg[Oprnd3])
 						{
 							PC = Oprnd1;
 						}
 						break;
-			case 139:	// Branch To Immediate Addr If Second Reg Contents is Greater Than Or Equal To Immediate Value
+			case 139:	// Branch To Oprnd1 Addr If Second Reg Contents is Greater Than Or Equal To Immediate Value
 						if(Reg[Oprnd2] >= Oprnd3)
 						{
 							PC = Oprnd1;

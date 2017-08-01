@@ -1,7 +1,7 @@
 /*
 *	File:	P2_Rev1.c
-*	Author:	Zachary Clark-Williams
-*	Dat Last Revised: 07/25/2017
+*	Authors: Dawit Amare, Zachary Clark-Williams
+*	Dat Last Revised: 08/01/2017
 *
 *	ECE 586 Computer Architecture
 *	Project 2 - Emulator

@@ -172,12 +172,10 @@ int main(int argc, char** argv)
 						//Reg[Oprnd1] = Reg[Oprnd2] * Oprnd3;
 						break;
 			case 72:	// Divide Second Reg Contents By Third Reg Contents, Store In First Reg
-						Reg[Oprnd1] = (Reg[Oprnd2] / Reg[Oprnd3]) & 255;
-						//Reg[Oprnd1] = Reg[Oprnd2] / Reg[Oprnd3];
+						Reg[Oprnd1] = Reg[Oprnd2] / Reg[Oprnd3];
 						break;
 			case 73:	// Divide Second Reg Contents By Immediate Value, Store In First Reg
-						Reg[Oprnd1] = (Reg[Oprnd2] / Oprnd3) & 255;
-						//Reg[Oprnd1] = Reg[Oprnd2] / Oprnd3;
+						Reg[Oprnd1] = Reg[Oprnd2] / Oprnd3;
 						break;
 			case 80:	// Modulo Second Reg Contents By Third Reg Contents, Store In First Reg
 						Reg[Oprnd1] = Reg[Oprnd2] % Reg[Oprnd3];

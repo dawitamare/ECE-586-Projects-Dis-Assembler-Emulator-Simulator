@@ -29,8 +29,8 @@ int main(int argc, char** argv)
 	int Oprnd3 		= 0;		// Operand 3 Integer
 	int Quit_Flag	= 0;		// Quit Flag when finished program
 	int PC			= 0;		// Program Counter
-	int i			= 0;
-	int Result		= 0;	
+	int i			= 0;		// Index Counter
+	int Result		= 0;		// Result:File load check
 
 	char *ascii_codes[256]; // list of ascii codes
 	int asci_int;
@@ -61,14 +61,14 @@ int main(int argc, char** argv)
 		}
 	}
 
-	FILE *filename;
-	filename = fopen("ascii.txt", "r"); 
-	char**table = (char**)malloc(257*sizeof(char*));
-	char buf[10];
+	// Set up ASCII array to utilize for pc and pci
+	FILE *filename;										// Setup pointer to file
+	filename = fopen("ascii.txt", "r"); 				// Point to ASCII file in folder
+	char**table = (char**)malloc(257*sizeof(char*));	// Allocate ASCII LUT
+	char buf[10];										// Setup Array Buffer for ASCII LUT
 	i = 0;
-
 	while (fgets(buf,10, filename))
-	{// Read in 256 cell array from image file
+	{// Read in 256 cell array buffer from image file
 		int length = strlen(buf);
 		char *line = (char*)malloc((length+1)*sizeof(char));
 		strcpy(line, buf);
@@ -76,46 +76,43 @@ int main(int argc, char** argv)
 
 		i++;	
 	}
-/*for(i = 0; i<256; i++)
-	{
-		printf("Ascii code %d: %s\n", i, table[i]);
 
-	}*/
 	for(i = 0; i<8 ; i++)
 	{// Set and Clear Register File
 		Reg[i] = 0;
 	}
-	int inctog = 0;
+	
 	while(Quit_Flag == 0)
 	{// Parse array cells 4-bytes
 	
-		Op_Code	= ((mem_space[PC])		 & 255);	// Parse out First  byte: Operation 
+		Op_Code	= ((mem_space[PC])		 & 255);	// Parse out First  byte: Operation Code
 		Oprnd1	= ((mem_space[PC] >> 8)  & 255);	// Parse out Second byte: Operand 1
 		Oprnd2	= ((mem_space[PC] >> 16) & 255);	// Parse out Third  byte: Operand 2
 		Oprnd3	= ((mem_space[PC] >> 24) & 255);	// Parse out Fourth byte: Operand 3
 		
 		PC++; // Increment Program Counter
+		
 		switch (Op_Code){ // Operation Disassemble Table
 			case 0:		// Quit	
 						Quit_Flag = 1;
 						break;
 			case 2:		// Print Register Contents As Number
-						printf("\n%d",Reg[Oprnd1]);
+						printf("\n%d", Reg[Oprnd1]);
 						break;
 			case 3:		// Print As Number Using Immediate
-						printf("\n%d",Oprnd1);
+						printf("\n%d", Oprnd1);
 						break;
 			case 4:		// Print Register Contents As ASCII Character 
-						printf("\n%c",Reg[Oprnd1]);
+						printf("\n%c", Reg[Oprnd1]);
 						break;
 			case 5:		// Print As ASCII Character Using Immediate
 						printf("\n%s\n",table[Oprnd1]);
 						break;
 			case 32:	// Load To Register From Register Contents Pointing to Memory Addr
-						Reg[Oprnd1] = Reg[Oprnd2];
+						Reg[Oprnd1] = mem_space[Reg[Oprnd2]];
 						break;
 			case 33:	// Load To Register From Immediate Value Pointing to Memory Addr
-						Reg[Oprnd1] = Oprnd2;
+						Reg[Oprnd1] = mem_space[Oprnd2];
 						break;
 			case 34:	// Store Register Contents To Memory Addr Pointed To By Register Contents
 						mem_space[Reg[Oprnd1]] = Reg[Oprnd2];
@@ -126,46 +123,23 @@ int main(int argc, char** argv)
 			case 36:	// Store Register Contents To Memory Addr Pointed To By Immediate Address
 						mem_space[Oprnd1] = Reg[Oprnd2];
 						break;
-			case 37:	// Store Mem Contents Pointed To By Immediate Value Addr To Mem Addr Pointed To By Immediate Value Addr
-						mem_space[Oprnd1] = mem_space[Oprnd2];
+			case 37:	// Store Immediate Value Oprnd2 into Mem Addr Pointed To By Immediate Value Addr Oprnd1
+						mem_space[Oprnd1] = Oprnd2;
 						break;
 			case 64:	// Add Reg Contents of Second Two Reg's, Store in First Reg
 						Reg[Oprnd1] = (Reg[Oprnd2] + Reg[Oprnd3]) & 255;		
-						/*
-						Results = (Reg[Oprnd2] + Reg[Oprnd3]) & 255;
-						if(Result > 255)
-						{
-							Reg[Oprnd1] = Result - 255;
-						}
-						else 
-							Reg[Oprnd1] = Result;
-						*/	
-					//	printf("\nADD: %d = %d + %d", Reg[Oprnd1], Reg[Oprnd2],Reg[Oprnd3]);
 						break;
 			case 65:	// Add Immediate To Second Reg Contents, Store In First Reg
-						Result = (Reg[Oprnd2] + Oprnd3) & 255;
-						/*
-						Result = Reg[Oprnd2] + Oprnd3;
-						if(Result > 255)
-						{
-							Reg[Oprnd1] = Result - 255;
-						}
-						else 
-							Reg[Oprnd1] = Result;
-						*/
-					//	printf("\nADDI: %d = %d + %d", Reg[Oprnd1], Reg[Oprnd2],Oprnd3);
+						Reg[Oprnd1] = (Reg[Oprnd2] + Oprnd3) & 255;
 						break;
 			case 66:	// Subtract Reg Contents of Second Two Reg's, Store in First Reg
 						Reg[Oprnd1] = (Reg[Oprnd2] - Reg[Oprnd3]) & 255;
-						//Reg[Oprnd1] = Reg[Oprnd2] - Reg[Oprnd3];
 						break;
 			case 67:	// Subtract Immediate Value From Second Reg Contents, Store In First Reg
 						Reg[Oprnd1] = (Reg[Oprnd2] - Oprnd3) & 255;
-						//Reg[Oprnd1] = Reg[Oprnd2] - Oprnd3;
 						break;
 			case 68:	// Multiply Reg Contents of Second Two Reg's, Store in First Reg
 						Reg[Oprnd1] = (Reg[Oprnd2] * Reg[Oprnd3]) & 255;
-						//Reg[Oprnd1] = Reg[Oprnd2] * Reg[Oprnd3];
 						break;
 			case 69:	// Multiply Immediate And Second Reg Contents, Store In First Reg
 						Reg[Oprnd1] = (Reg[Oprnd2] * Oprnd3) & 255;
@@ -185,7 +159,7 @@ int main(int argc, char** argv)
 						break;
 			case 128:	// Jump To Specified By Immediate Addr
 						PC = Oprnd1;
-					break;//	goto SKIP;
+						break;//	goto SKIP;
 			case 130:	// Branch To Immediate Addr If Second Reg Contents is Equal to Contents of Third Reg
 						if(Reg[Oprnd2] == Reg[Oprnd3])
 						{

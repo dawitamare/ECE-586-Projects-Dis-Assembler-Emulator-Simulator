@@ -1,7 +1,7 @@
 /*
 *	File:	P2_Rev1.c
 *	Authors: Dawit Amare, Zachary Clark-Williams
-*	Dat Last Revised: 08/01/2017
+*	Dat Last Revised: 08/03/2017
 *
 *	ECE 586 Computer Architecture
 *	Project 2 - Emulator
@@ -143,7 +143,6 @@ int main(int argc, char** argv)
 						break;
 			case 69:	// Multiply Immediate And Second Reg Contents, Store In First Reg
 						Reg[Oprnd1] = (Reg[Oprnd2] * Oprnd3) & 255;
-						//Reg[Oprnd1] = Reg[Oprnd2] * Oprnd3;
 						break;
 			case 72:	// Divide Second Reg Contents By Third Reg Contents, Store In First Reg
 						Reg[Oprnd1] = Reg[Oprnd2] / Reg[Oprnd3];
@@ -157,64 +156,64 @@ int main(int argc, char** argv)
 			case 81:	// Modulus Second Reg Contents By Immediate Value, Store In First Reg
 						Reg[Oprnd1] = Reg[Oprnd2] % Oprnd3;
 						break;
-			case 128:	// Jump To Specified By Immediate Addr
+			case 128:	// Jump To Instruction Pointed To By Immediate Value (Operand1)
 						PC = Oprnd1;
-						break;//	goto SKIP;
-			case 130:	// Branch To Immediate Addr If Second Reg Contents is Equal to Contents of Third Reg
+						break;
+			case 130:	// Branch To Instruction Addr pointed top be Immediate value (Operand1) If Second Reg Contents is Equal to Contents of Third Reg
 						if(Reg[Oprnd2] == Reg[Oprnd3])
 						{
 							PC = Oprnd1;
 						}
 						break;
-			case 131:	// Branch To Immediate Addr If Second Reg Contents is Equal to Immediate Value
+			case 131:	// Branch To Instruction Addr pointed top be Immediate value (Operand1) If Second Reg Contents is Equal to Immediate Value
 						if(Reg[Oprnd2] == Oprnd3)
 						{
 							PC = Oprnd1;
 						}
 						break;
-			case 132:	// Branch To Immediate Addr If Second Reg Contents is Less Than Contents of Third Reg 
+			case 132:	// Branch To Instruction Addr pointed top be Immediate value (Operand1) If Second Reg Contents is Less Than Contents of Third Reg 
 						if(Reg[Oprnd2] < Reg[Oprnd3])
 						{
 							PC = Oprnd1;
 						}
 						break;
-			case 133:	// Branch To Immediate Addr If Second Reg Contents is Less Than Immediate Value
+			case 133:	// Branch To Instruction Addr pointed top be Immediate value (Operand1) If Second Reg Contents is Less Than Immediate Value
 						if(Reg[Oprnd2] < Oprnd3)
 						{
 							PC = Oprnd1;
 						}
 						break;
-			case 134:	// Branch To Immediate Addr If Second Reg Contents is Less Than Or Equal to Contents of Third Reg
+			case 134:	// Branch To Instruction Addr pointed top be Immediate value (Operand1) If Second Reg Contents is Less Than Or Equal to Contents of Third Reg
 						if(Reg[Oprnd2] <= Reg[Oprnd3])
 						{
 							PC = Oprnd1;
 						}
 						break;
-			case 135:	// Branch To Immediate Addr If Second Reg Contents is Less Than Or Equal To Immediate Value
+			case 135:	// Branch To Instruction Addr pointed top be Immediate value (Operand1) If Second Reg Contents is Less Than Or Equal To Immediate Value
 						if(Reg[Oprnd2] <= Oprnd3)
 						{
 							PC = Oprnd1;
 						}
 						break;
-			case 136:	// Branch To Immediate Addr If Second Reg Contents is Greater Than Contents of Third Reg
+			case 136:	// Branch To Instruction Addr pointed top be Immediate value (Operand1) If Second Reg Contents is Greater Than Contents of Third Reg
 						if(Reg[Oprnd2] > Reg[Oprnd3])
 						{
 							PC = Oprnd1;
 						}
 						break;
-			case 137:	// Branch To Immediate Addr If Second Reg Contents is Greater Than Immediate Value
+			case 137:	// Branch To Instruction Addr pointed top be Immediate value (Operand1) If Second Reg Contents is Greater Than Immediate Value
 						if(Reg[Oprnd2] > Oprnd3)
 						{
 							PC = Oprnd1;
 						}
 						break;
-			case 138:	// Branch To Immediate Addr If Second Reg Contents is Greater Than Or Equal to Contents of Third Reg
+			case 138:	// Branch To Instruction Addr pointed top be Immediate value (Operand1) If Second Reg Contents is Greater Than Or Equal to Contents of Third Reg
 						if(Reg[Oprnd2] >= Reg[Oprnd3])
 						{
 							PC = Oprnd1;
 						}
 						break;
-			case 139:	// Branch To Immediate Addr If Second Reg Contents is Greater Than Or Equal To Immediate Value
+			case 139:	// Branch To Instruction Addr pointed top be Immediate value (Operand1) If Second Reg Contents is Greater Than Or Equal To Immediate Value
 						if(Reg[Oprnd2] >= Oprnd3)
 						{
 							PC = Oprnd1;

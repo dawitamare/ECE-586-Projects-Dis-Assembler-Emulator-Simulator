@@ -119,7 +119,7 @@ int main(int argc, char** argv)
 	}
 	int Stall_IF_Timer = 0;
 	
-	while(Quit_Flag == 0)
+	while(1)
 	{
 		/****************************************************************************
 		|					Register Writeback (WB) Stage							|
@@ -132,41 +132,46 @@ int main(int argc, char** argv)
 		{// No Stall Procceed to execute instruction
 			switch(pr[4].OpCode){
 				case 32:	// Load To Register From Register Contents Pointing to Memory Addr
-							Reg[pr[4].Dest] = pr[3].LHS;
-							break;
+							//Reg[pr[4].Dest] = pr[3].LHS;
+							//break;
 				case 33:	// Load To Register From Immediate Value Pointing to Memory Addr
 							Reg[pr[4].Dest] = pr[3].LHS;
+							break;
 				case 64:	// Add Reg Contents of Second Two Reg's, Store in First Reg
-							Reg[pr[4].Dest] = pr[2].ALU_Output;
-							break;
+							//Reg[pr[4].Dest] = pr[2].ALU_Output;
+							//break;
 				case 65:	// Add Immediate To Second Reg Contents, Store In First Reg
-							Reg[pr[4].Dest] = pr[2].ALU_Output;
-							break;
+							//Reg[pr[4].Dest] = pr[2].ALU_Output;
+							//break;
 				case 66:	// Subtract Reg Contents of Second Two Reg's, Store in First Reg
-							Reg[pr[4].Dest] = pr[2].ALU_Output;
-							break;
+							//Reg[pr[4].Dest] = pr[2].ALU_Output;
+							//break;
 				case 67:	// Subtract Immediate Value From Second Reg Contents, Store In First Reg
-							Reg[pr[4].Dest] = pr[2].ALU_Output;
-							break;
+							//Reg[pr[4].Dest] = pr[2].ALU_Output;
+							//break;
 				case 68:	// Multiply Reg Contents of Second Two Reg's, Store in First Reg
-							Reg[pr[4].Dest] = pr[2].ALU_Output;
-							break;
+							//Reg[pr[4].Dest] = pr[2].ALU_Output;
+							//break;
 				case 69:	// Multiply Immediate And Second Reg Contents, Store In First Reg
-							Reg[pr[4].Dest] = pr[2].ALU_Output;
-							break;
+							//Reg[pr[4].Dest] = pr[2].ALU_Output;
+							//break;
 				case 72:	// Divide Second Reg Contents By Third Reg Contents, Store In First Reg
-							Reg[pr[4].Dest] = pr[2].ALU_Output;
-							break;
+							//Reg[pr[4].Dest] = pr[2].ALU_Output;
+							//break;
 				case 73:	// Divide Second Reg Contents By Immediate Value, Store In First Reg
-							Reg[pr[4].Dest] = pr[2].ALU_Output;
-							break;
+							//Reg[pr[4].Dest] = pr[2].ALU_Output;
+							//break;
 				case 80:	// Modulo Second Reg Contents By Third Reg Contents, Store In First Reg
-							Reg[pr[4].Dest] = pr[2].ALU_Output;
-							break;
+							//Reg[pr[4].Dest] = pr[2].ALU_Output;
+							//break;
 				case 81:	// Modulus Second Reg Contents By Immediate Value, Store In First Reg
 							Reg[pr[4].Dest] = pr[2].ALU_Output;
 							break;
 			}
+		}
+		if (Quit_Flag == 1)
+		{// OpCode == Q --> Quit, Exit Program Running.
+			exit(1)
 		}
 		
 		/****************************************************************************
@@ -193,7 +198,7 @@ int main(int argc, char** argv)
 		}else
 		{// No Stall Procceed to execute instruction
 			switch (pr[2].OpCode){ // Operation Disassemble Table
-				case 0:		// Quit	
+				case 0:		// Quit	- Fully exit program 
 							Quit_Flag = 1;
 							break;
 				case 2:		// Print Register Contents As Number
@@ -252,13 +257,13 @@ int main(int argc, char** argv)
 							pr[2].ALU_Output = (pr[1].LHS + pr[1].RHS) & 255;		
 							break;
 				case 65:	// Add Immediate To Second Reg Contents, Store In First Reg
-							pr[2].ALU_Output = (pr[1].LHS + Oprnd3) & 255;
+							pr[2].ALU_Output = (pr[1].LHS + pr[2].Source2) & 255;
 							break;
 				case 66:	// Subtract Reg Contents of Second Two Reg's, Store in First Reg
 							pr[2].ALU_Output = (pr[1].LHS - pr[1].RHS) & 255;
 							break;
 				case 67:	// Subtract Immediate Value From Second Reg Contents, Store In First Reg
-							pr[2].ALU_Output = (pr[1].LHS - Oprnd3) & 255;
+							pr[2].ALU_Output = (pr[1].LHS - pr[2].Source2) & 255;
 							break;
 				case 68:	// Multiply Reg Contents of Second Two Reg's, Store in First Reg
 							pr[2].ALU_Output = (pr[1].LHS * pr[1].RHS) & 255;

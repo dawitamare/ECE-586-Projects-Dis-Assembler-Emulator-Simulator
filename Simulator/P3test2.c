@@ -127,12 +127,47 @@ int main(int argc, char** argv)
 		
 		if(pr[4].Stall != 0)
 		{// If there is a stall we must skip WB stage and decrement latency counter!
-			pr[2].Stall = pr[4].Stall--;	// Decrement and pass down the pipeline
+			pr[3].Stall = pr[4].Stall--;	// Decrement and pass down the pipeline
 		}else
 		{// No Stall Procceed to execute instruction
-			
+			switch(pr[4].OpCode){
+				case 32:	// Load To Register From Register Contents Pointing to Memory Addr
+							Reg[pr[4].Dest] = pr[3].LHS;
+							break;
+				case 33:	// Load To Register From Immediate Value Pointing to Memory Addr
+							Reg[pr[4].Dest] = pr[3].LHS;
+				case 64:	// Add Reg Contents of Second Two Reg's, Store in First Reg
+							Reg[pr[4].Dest] = pr[2].ALU_Output;
+							break;
+				case 65:	// Add Immediate To Second Reg Contents, Store In First Reg
+							Reg[pr[4].Dest] = pr[2].ALU_Output;
+							break;
+				case 66:	// Subtract Reg Contents of Second Two Reg's, Store in First Reg
+							Reg[pr[4].Dest] = pr[2].ALU_Output;
+							break;
+				case 67:	// Subtract Immediate Value From Second Reg Contents, Store In First Reg
+							Reg[pr[4].Dest] = pr[2].ALU_Output;
+							break;
+				case 68:	// Multiply Reg Contents of Second Two Reg's, Store in First Reg
+							Reg[pr[4].Dest] = pr[2].ALU_Output;
+							break;
+				case 69:	// Multiply Immediate And Second Reg Contents, Store In First Reg
+							Reg[pr[4].Dest] = pr[2].ALU_Output;
+							break;
+				case 72:	// Divide Second Reg Contents By Third Reg Contents, Store In First Reg
+							Reg[pr[4].Dest] = pr[2].ALU_Output;
+							break;
+				case 73:	// Divide Second Reg Contents By Immediate Value, Store In First Reg
+							Reg[pr[4].Dest] = pr[2].ALU_Output;
+							break;
+				case 80:	// Modulo Second Reg Contents By Third Reg Contents, Store In First Reg
+							Reg[pr[4].Dest] = pr[2].ALU_Output;
+							break;
+				case 81:	// Modulus Second Reg Contents By Immediate Value, Store In First Reg
+							Reg[pr[4].Dest] = pr[2].ALU_Output;
+							break;
+			}
 		}
-		// Reg[pr[4].Dest] = ALU_Output
 		
 		/****************************************************************************
 		|						Memory Access (MEM) Stage							|
@@ -162,20 +197,24 @@ int main(int argc, char** argv)
 							Quit_Flag = 1;
 							break;
 				case 2:		// Print Register Contents As Number
-							printf("\n%d", pr[2].ALU_Output);
+							printf("\n%d", pr[1].ALU_Output);
 							break;
 				case 3:		// Print As Number Using Immediate
-							printf("\n%d", Oprnd1);
+							printf("\n%d", pr[1].Dest);
 							break;
 				case 4:		// Print Register Contents As ASCII Character 
-							printf("\n%c", (char) pr[2].ALU_Output);
+							printf("\n%c", (char) pr[1].ALU_Output);
 							break;
 				case 5:		// Print As ASCII Character Using Immediate
 							//printf("\n%s\n",table[Oprnd1]);
-							printf("\n%c, (char) Oprdn1");
+							printf("\n%c", (char) pr[1].Dest);
 							break;
 				case 32:	// Load To Register From Register Contents Pointing to Memory Addr
-							pr[2].ALU_Output = LHS;
+							/*
+								There should be no action here because we are accessing memory ONLY
+								ONLY a Stall
+							*/
+							//pr[2].ALU_Output = LHS;
 							break;
 				case 33:	// Load To Register From Immediate Value Pointing to Memory Addr
 							/*
@@ -210,117 +249,117 @@ int main(int argc, char** argv)
 							//mem_space[Oprnd1] = Oprnd2;
 							break;
 				case 64:	// Add Reg Contents of Second Two Reg's, Store in First Reg
-							pr[2].ALU_Output = (LHS + RHS) & 255;		
+							pr[2].ALU_Output = (pr[1].LHS + pr[1].RHS) & 255;		
 							break;
 				case 65:	// Add Immediate To Second Reg Contents, Store In First Reg
-							pr[2].ALU_Output = (LHS + Oprnd3) & 255;
+							pr[2].ALU_Output = (pr[1].LHS + Oprnd3) & 255;
 							break;
 				case 66:	// Subtract Reg Contents of Second Two Reg's, Store in First Reg
-							pr[2].ALU_Output = (LHS - RHS) & 255;
+							pr[2].ALU_Output = (pr[1].LHS - pr[1].RHS) & 255;
 							break;
 				case 67:	// Subtract Immediate Value From Second Reg Contents, Store In First Reg
-							pr[2].ALU_Output = (LHS - Oprnd3) & 255;
+							pr[2].ALU_Output = (pr[1].LHS - Oprnd3) & 255;
 							break;
 				case 68:	// Multiply Reg Contents of Second Two Reg's, Store in First Reg
-							pr[2].ALU_Output = (LHS * RHS) & 255;
+							pr[2].ALU_Output = (pr[1].LHS * pr[1].RHS) & 255;
 							pr[2].Execution_Lat = 6;	// 6-Cycle Stall Setup
 							break;
 				case 69:	// Multiply Immediate And Second Reg Contents, Store In First Reg
-							pr[2].ALU_Output = (LHS * Oprnd3) & 255;
+							pr[2].ALU_Output = (pr[1].LHS * pr[2].Source2) & 255;
 							pr[2].Execution_Lat = 6;	// 6-Cycle Stall Setup
 							break;
 				case 72:	// Divide Second Reg Contents By Third Reg Contents, Store In First Reg
-							pr[2].ALU_Output = LHS / RHS;
+							pr[2].ALU_Output = pr[1].LHS / pr[1].RHS;
 							pr[2].Execution_Lat = 15;	// 15-Cycle Stall Setup
 							break;
 				case 73:	// Divide Second Reg Contents By Immediate Value, Store In First Reg
-							pr[2].ALU_Output = LHS / Oprnd3;
+							pr[2].ALU_Output = pr[1].LHS / pr[2].Source2;
 							pr[2].Execution_Lat = 15;	// 15-Cycle Stall Setup
 							break;
 				case 80:	// Modulo Second Reg Contents By Third Reg Contents, Store In First Reg
-							pr[2].ALU_Output = LHS % RHS;
+							pr[2].ALU_Output = pr[1].LHS % pr[1].RHS;
 							pr[2].Execution_Lat = 15;	// 15-Cycle Stall Setup
 							break;
 				case 81:	// Modulus Second Reg Contents By Immediate Value, Store In First Reg
-							pr[2].ALU_Output = LHS % Oprnd3;
+							pr[2].ALU_Output = pr[1].LHS % pr[2].Source2;
 							pr[2].Execution_Lat = 15;	// 15-Cycle Stall Setup
 							break;
 				case 128:	// Jump To Instruction Pointed To By Immediate Value (Operand1)
-							PC = Oprnd1;
+							PC = pr[1].Dest;
 							pr[2].Execution_Lat = 2;	// 2-Cycle Stall Setup
 							break;
 				case 130:	// Branch To Instruction Addr pointed top be Immediate value (Operand1) If Second Reg Contents is Equal to Contents of Third Reg
-							if(LHS == RHS)
+							if(pr[1].LHS == pr[1].RHS)
 							{
-								PC = Oprnd1;
+								PC = pr[1].Dest;
 							}
 							pr[2].Execution_Lat = 2;	// 2-Cycle Stall Setup
 							break;
 				case 131:	// Branch To Instruction Addr pointed top be Immediate value (Operand1) If Second Reg Contents is Equal to Immediate Value
-							if(LHS == Oprnd3)
+							if(pr[1].LHS == pr[1].Source2)
 							{
-								PC = Oprnd1;
+								PC = pr[1].Dest;
 							}
 							pr[2].Execution_Lat = 2;	// 2-Cycle Stall Setup
 							break;
 				case 132:	// Branch To Instruction Addr pointed top be Immediate value (Operand1) If Second Reg Contents is Less Than Contents of Third Reg 
-							if(LHS < RHS)
+							if(pr[1].LHS < pr[1].RHS)
 							{
-								PC = Oprnd1;
+								PC = pr[1].Dest;
 							}
 							pr[2].Execution_Lat = 2;	// 2-Cycle Stall Setup
 							break;
 				case 133:	// Branch To Instruction Addr pointed top be Immediate value (Operand1) If Second Reg Contents is Less Than Immediate Value
-							if(LHS < Oprnd3)
+							if(pr[1].LHS < pr[1].Source2)
 							{
-								PC = Oprnd1;
+								PC = pr[1].Dest;
 							}
 							pr[2].Execution_Lat = 2;	// 2-Cycle Stall Setup
 							break;
 				case 134:	// Branch To Instruction Addr pointed top be Immediate value (Operand1) If Second Reg Contents is Less Than Or Equal to Contents of Third Reg
-							if(LHS <= RHS)
+							if(pr[1].LHS <= pr[1].RHS)
 							{
-								PC = Oprnd1;
+								PC = pr[1].Dest;
 							}
 							pr[2].Execution_Lat = 2;	// 2-Cycle Stall Setup
 							break;
 				case 135:	// Branch To Instruction Addr pointed top be Immediate value (Operand1) If Second Reg Contents is Less Than Or Equal To Immediate Value
-							if(LHS <= Oprnd3)
+							if(pr[1].LHS <= pr[1].Source2)
 							{
-								PC = Oprnd1;
+								PC = pr[1].Dest;
 							}
 							pr[2].Execution_Lat = 2;	// 2-Cycle Stall Setup
 							break;
 				case 136:	// Branch To Instruction Addr pointed top be Immediate value (Operand1) If Second Reg Contents is Greater Than Contents of Third Reg
-							if(LHS > RHS)
+							if(pr[1].LHS > pr[1].RHS)
 							{
-								PC = Oprnd1;
+								PC = pr[1].Dest;
 							}
 							pr[2].Execution_Lat = 2;	// 2-Cycle Stall Setup
 							break;
 				case 137:	// Branch To Instruction Addr pointed top be Immediate value (Operand1) If Second Reg Contents is Greater Than Immediate Value
-							if(LHS > Oprnd3)
+							if(pr[1].LHS > pr[1].Source2)
 							{
-								PC = Oprnd1;
+								PC = pr[1].Dest;
 							}
 							pr[2].Execution_Lat = 2;	// 2-Cycle Stall Setup
 							break;
 				case 138:	// Branch To Instruction Addr pointed top be Immediate value (Operand1) If Second Reg Contents is Greater Than Or Equal to Contents of Third Reg
-							if(LHS >= RHS)
+							if(pr[1].LHS >= pr[1].RHS)
 							{
-								PC = Oprnd1;
+								PC = pr[1].Dest;
 							}
 							pr[2].Execution_Lat = 2;	// 2-Cycle Stall Setup
 							break;
 				case 139:	// Branch To Instruction Addr pointed top be Immediate value (Operand1) If Second Reg Contents is Greater Than Or Equal To Immediate Value
-							if(LHS >= Oprnd3)
+							if(pr[1].LHS >= pr[1].Source2)
 							{
-								PC = Oprnd1;
+								PC = pr[1].Dest;
 							}
 							pr[2].Execution_Lat = 2;	// 2-Cycle Stall Setup
 							break;
 				default:	// If Nothing Matches We Have An **ERROR!!!
-							printf("\n**Error: Unrecognizable Operation Code.\n\n");
+							printf("\n**Error: Unrecognizable Operation Code In EX:  %d.\n\n", pr[1].OpCode);
 							exit(1);
 							break;
 			}
@@ -336,11 +375,10 @@ int main(int argc, char** argv)
 		
 		if(pr[1].Stall != 0)
 		{// If there is a stall we must skip ID stage and decrement stall counter!
-			pr.[0].Stall = pr[1].Stall--;	// Decrement and send down the pipeline
+			pr[0].Stall = pr[1].Stall--;	// Decrement and send down the pipeline
 		}else
 		{// No Stall Procceed to execute instruction
-			 Switch(Opcode)
-			{
+			 switch(pr[1].OpCode){
 			//	Case 0:
 			//Read Reg[Source1] and store in LHS and REG[Source2] and store in RHLS if applicable
 			//	...
@@ -545,7 +583,7 @@ int main(int argc, char** argv)
 							}*/
 							break;
 				default:	// If Nothing Matches We Have An **ERROR!!!
-							printf("\n**Error: Unrecognizable Operation Code.\n\n");
+							printf("\n**Error: Unrecognizable Operation Code In ID:  %d.\n\n", pr[1].OpCode);
 							exit(1);
 							break;
 			}
@@ -564,13 +602,13 @@ int main(int argc, char** argv)
 			int Oprnd3	= ((mem_space[PC] >> 24) & 255);	// Parse out Fourth byte: Operand 3
 		*/	
 			// Load the Above Into pr[0], -1 everything else in pr[0]
-			pr[0].Op_Code	= ((mem_space[PC])	 		& 255);	// Parse out First  byte: Operation Code
+			pr[0].OpCode	= ((mem_space[PC])	 		& 255);	// Parse out First  byte: Operation Code
 			pr[0].Dest		= ((mem_space[PC] >> 8)		& 255);	// Parse out Second byte: Operand 1
 			pr[0].Source1	= ((mem_space[PC] >> 16)	& 255);	// Parse out Third  byte: Operand 2
 			pr[0].Source2	= ((mem_space[PC] >> 24)	& 255);	// Parse out Fourth byte: Operand 3
 			PC++;	
 		}
-		Else
+		else
 		{
 			//Send a Stall down the pipe, -1 everything else in pr[0]
 			pr[0].Stall = Stall_IF_Timer;
@@ -586,7 +624,7 @@ int main(int argc, char** argv)
 		{
 			pr[i].ALU_Output = pr[i-1].ALU_Output;
 			pr[i].Stall = pr[i-1].Stall;
-			pr[i].Op_Code = pr[i-1].Op_Code;
+			pr[i].OpCode = pr[i-1].OpCode;
 			pr[i].Dest = pr[i-1].Dest;
 			pr[i].Source1 = pr[i-1].Source1;
 			pr[i].Source2 = pr[i-1].Source2;

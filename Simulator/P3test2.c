@@ -121,7 +121,10 @@ int main(int argc, char** argv)
 	
 	while(Quit_Flag == 0)
 	{
-		// Register Writeback Stage
+		/****************************************************************************
+		|					Register Writeback (WB) Stage							|
+		****************************************************************************/
+		
 		if(pr[4].Stall != 0)
 		{// If there is a stall we must skip WB stage and decrement latency counter!
 			pr[2].Stall = pr[4].Stall--;	// Decrement and pass down the pipeline
@@ -134,6 +137,7 @@ int main(int argc, char** argv)
 		/****************************************************************************
 		|						Memory Access (MEM) Stage							|
 		****************************************************************************/
+		
 		if(pr[3].Stall != 0)
 		{// If there is a stall we must skip MEM stage and decrement latency counter!
 			pr[2].Stall = pr[3].Stall--;	// Decrement and pass down the pipeline
@@ -329,6 +333,7 @@ int main(int argc, char** argv)
 		/****************************************************************************
 		|						Instruction Decode (ID) Stage						|
 		****************************************************************************/
+		
 		if(pr[1].Stall != 0)
 		{// If there is a stall we must skip ID stage and decrement stall counter!
 			pr.[0].Stall = pr[1].Stall--;	// Decrement and send down the pipeline

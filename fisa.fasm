@@ -1,0 +1,50 @@
+stiai 100 70
+stiai 101 97
+addi r1 r0 200
+addi r2 r0 100
+sub r3 r1 r2
+addi r3 r3 7
+ld r4 r2
+pc r4
+beq 11 r2 r3
+addi r2 r2 1
+j 8
+ldi r4 101
+pc r4
+pc r3
+mod r2 r3 r1
+subi r2 r2 1
+bgei 15 r2 3
+div r1 r1 r2
+addi r2 r1 1
+pc r2
+ble 23 r1 r2
+q
+q
+pci 45
+ldi r3 101
+muli r2 r3 2
+modi r2 r2 3
+div r1 r3 r2
+addi r1 r1 25
+pc r1
+blt 45 r2 r1
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+q
+addi r2 r3 18
+pc r2
+pc r3
+addi r3 r3 3
+p r3
